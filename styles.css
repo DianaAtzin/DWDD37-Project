@@ -8,6 +8,7 @@
   --main-white: #fff;
   --sub-blue: #86c6f4;
   --sub-grey: #ccc;
+  background: linear-gradient(106.5deg, rgba(255, 215, 185, 0.91) 23%, rgba(223, 159, 247, 0.8) 93%);
 }
 
 * {
@@ -20,7 +21,7 @@
 body {
   height: 100vh;
   width: 100%;
-  background: var(--main-green);
+  background: var(background);
 }
 
 button {
