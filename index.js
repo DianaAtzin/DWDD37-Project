@@ -1,3 +1,5 @@
+import "./styles.css";
+
 // Declare the todoList array to store all todos
 let todoList = [];
 
