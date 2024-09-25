@@ -95,8 +95,8 @@ function addTodo() {
 
 // Event listeners for adding todos
 addButton.addEventListener("click", addTodo);
-inputField.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") addTodo();
+inputField.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") addTodo();
 });
 
 
