@@ -1,7 +1,14 @@
+// Variables to hold elements and data
+let todoListElement = document.getElementById("todoList");
+let newTodoInput = document.getElementById("newTodoInput");
+let addTodoBtn = document.getElementById("addTodoBtn");
+let updateTodoForm = document.getElementById("updateTodoForm");
+let updateTodoName = document.getElementById("updateTodoName");
+let updateTodoBtn = document.getElementById("updateTodoBtn");
+let clearDoneBtn = document.getElementById("clearDoneBtn");
+let taskCount = document.getElementById("taskCount");
 
-// Declare the todoList array to store all todos
-
-// Initial todos array with sample data
+// Predefined todos array
 let todos = [
   {
     todoID: 0,
@@ -20,103 +27,100 @@ let todos = [
   },
 ];
 
-// Select the todoList element
-let todoList = document.querySelector(".todoList");
-let inputField = document.querySelector(".inputField input");
-let addButton = document.querySelector(".inputField button");
-let clearCompletedBtn = document.querySelector(".footer button");
+let currentlyEditing = null;
 
-
-// Function to render the todos in the list
+// Function to render todos
 function renderTodos() {
-  todoList.innerHTML = ""; // Clear the existing list items
+  todoListElement.innerHTML = ""; // Clear existing todos
 
-  todos.forEach((todo) => {
-    let li = document.createElement("li"); // Create a new list item element
-    li.textContent = todo.todoText; // Set the text content to the todo text
-    
-    // Delete buttons
-    let deleteBtn = document.createElement("span");  // Create a new span element
-    deleteBtn.innerHTML = '<i class="fa fa-trash"></i>';  // Add a delete icon to the span element
-    deleteBtn.addEventListener("click", () => deleteTodo(todo.todoID));  // Add a click event listener to the delete button
+  todos.forEach((todo, index) => {
+    let li = document.createElement("li");
+    li.textContent = todo.todoText; // Access todoText property
+    li.classList.toggle("done", todo.todoComplete); // Access todoComplete property
 
-    li.appendChild(deleteBtn); // Append the delete button to the list item
-    
-    
-    //Mark the todo as completed
-    // Apply "done" class if the todo is completed
-    li.className = todo.todoComplete ? "done" : "";
-    // Add a click event listener to toggle completion status
+    // Add click event to toggle done status
     li.addEventListener("click", () => {
-      toggleTodoCompletion(todo.todoID); // Toggle the completion status
+      todo.todoComplete = !todo.todoComplete; // Toggle done status
+      renderTodos(); // Re-render todos to reflect changes
     });
-    todoList.appendChild(li); // Append the list item to the todoList
+
+    let actions = document.createElement("div");
+    actions.classList.add("actions");
+
+    let editBtn = document.createElement("span");
+    editBtn.classList.add("editBtn");
+    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+    editBtn.addEventListener("click", (event) => {
+      event.stopPropagation(); // Prevent li click event from firing
+      editTodo(index);
+    });
+
+    let deleteBtn = document.createElement("span");
+    deleteBtn.classList.add("deleteBtn");
+    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+    deleteBtn.addEventListener("click", (event) => {
+      event.stopPropagation(); // Prevent li click event from firing
+      deleteTodo(index);
+    });
+
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+    li.appendChild(actions);
+    todoListElement.appendChild(li);
   });
-
-  // Update the pending tasks count
-  updatePendingCount();
-}
-
-
-
-// Function to toggle completion status of a todo
-function toggleTodoCompletion(id) {
-  const todo = todos.find((todoItem) => todoItem.todoID === id); // Find the todo by ID
-  if (todo) {
-    todo.todoComplete = !todo.todoComplete; // Toggle the completion status
-    console.log(
-      `Todo ${todo.todoText} marked as ${todo.todoComplete ? "done" : "not done"}`
-    );
-    renderTodos(); // Re-render the todos to reflect changes
-  }
-}
-
-
-// Function to update the pending tasks count
-function updatePendingCount() {
-  const pendingCount = todos.filter(todo => !todo.todoComplete).length;
-  const footerText = document.querySelector(".footer span");
-  footerText.textContent = `You have ${pendingCount} pending tasks.`;
+  taskCount.textContent = `You have ${todos.filter(todo => !todo.todoComplete).length} pending tasks.`;
 }
 
 // Function to add a new todo
 function addTodo() {
-  const todoText = inputField.value.trim();
-  if (todoText === "") return; // Prevent adding empty todos
-  const newTodo = {
-    todoID: todos.length ? Math.max(...todos.map(todo => todo.todoID)) + 1 : 0,
-    todoText,
-    todoComplete: false,
-  };
-  todos.push(newTodo);
-  inputField.value = ""; // Clear input field
-  renderTodos(); // Re-render list
+  let title = newTodoInput.value.trim();
+  if (title) {
+    let newTodoID = todos.length ? Math.max(todos.map(todo => todo.todoID)) + 1 : 0; // Ensure unique todoID
+    todos.push({ todoID: newTodoID, todoText: title, todoComplete: false });
+    newTodoInput.value = "";
+    renderTodos();
+  }
 }
 
-// Event listeners for adding todos
-addButton.addEventListener("click", addTodo);
-inputField.addEventListener("keypress", (event) => {
-  if (event.key === "Enter") addTodo();
+// Function to edit a todo
+function editTodo(index) {
+  updateTodoName.value = todos[index].todoText;
+  currentlyEditing = index;
+  updateTodoForm.classList.remove("hidden");
+}
+
+// Function to update a todo
+updateTodoBtn.addEventListener("click", () => {
+  if (currentlyEditing !== null) {
+    todos[currentlyEditing].todoText = updateTodoName.value.trim();
+    updateTodoName.value = "";
+    updateTodoForm.classList.add("hidden");
+    currentlyEditing = null;
+    renderTodos();
+  }
 });
 
-
 // Function to delete a todo
-function deleteTodo(id) {
-  todos = todos.filter((todo) => todo.todoID !== id);
-  renderTodos(); // Re-render list
+function deleteTodo(index) {
+  todos.splice(index, 1);
+  renderTodos();
 }
-
 
 // Function to clear completed todos
-function clearCompletedTodos() {
-  todos = todos.filter((todo) => !todo.todoComplete); // Remove completed todos
-  renderTodos(); // Re-render list
-}
+clearDoneBtn.addEventListener("click", () => {
+  todos = todos.filter(todo => !todo.todoComplete);
+  renderTodos();
+});
 
+// Event listener for adding a todo by button click
+addTodoBtn.addEventListener("click", addTodo);
 
-// Event listener for clearing completed todos
-clearCompletedBtn.addEventListener("click", clearCompletedTodos);
+// Event listener for adding a todo by pressing "Enter"
+newTodoInput.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    addTodo();
+  }
+});
 
-
-// Initial render of todos
+// Render todos on page load
 renderTodos();

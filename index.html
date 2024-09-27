@@ -1,41 +1,35 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Diana's Todo App</title>
-    <meta charset="UTF-8" />
-  </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diana's Todo App</title>
   <link rel="stylesheet" href="styles.css">
-  <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="wrapper">
+    <header>Todo List</header>
+    
+    <div class="inputField">
+      <input type="text" id="newTodoInput" placeholder="Enter new task" />
+      <button id="addTodoBtn"><i class="fas fa-plus"></i></button>
+    </div>
+    
+    <ul class="todoList" id="todoList"></ul>
 
-  <body>
-    <div class="wrapper">
-      <header>Todo List</header>
-      <div class="inputField">
-        <input type="text" placeholder="Enter new task" />
-        <button><i class="fas fa-plus"></i></button>
-      </div>
-      <ul class="todoList">
-        <li class="done">
-          Buy groceries<span> <i class="fa fa-trash"></i></span>
-        </li>
-        <li>
-          Wash the dishes
-          <span class="editBtn"><i class="fa fa-edit"></i></span>
-          <span> <i class="fa fa-trash"></i></span>
-        </li>
-        <li>
-          Finish laundry
-          <span class="editBtn"><i class="fa fa-edit"></i></span>
-          <span> <i class="fa fa-trash"></i></span>
-        </li>
-      </ul>
-      <div class="footer">
-        <span>You have 1 pending tasks.</span>
-        <button>Clear Done</button>
-      </div>
+    <div id="updateTodoForm" class="hidden">
+      <input type="text" id="updateTodoName" placeholder="Edit task" />
+      <button id="updateTodoBtn">Update Todo</button>
     </div>
 
-    <script src="script.js"></script> 
-  </body>
+    <div class="footer">
+      <span id="taskCount">You have 0 pending tasks.</span>
+      <button id="clearDoneBtn">Clear Done</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script> 
+</body>
 </html>
