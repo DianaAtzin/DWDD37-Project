@@ -17,6 +17,7 @@ export function renderTodos() {
   todos.forEach((todo, index) => {
     let li = document.createElement("li");
     li.textContent = `${todo.todoText} - ${getCategoryNameByID(todo.categoryID)}`; // Show category with todo
+    
 
     li.classList.toggle("done", todo.todoComplete); // Access todoComplete property
 
@@ -53,6 +54,8 @@ export function renderTodos() {
   });
 
   taskCount.textContent = `You have ${todos.filter(todo => !todo.todoComplete).length} pending tasks.`;
+
+
 }
 
 // Function to render categories in both the add and edit forms

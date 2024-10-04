@@ -11,16 +11,18 @@ const newCategoryInput = document.getElementById("newCategoryInput");
 const addCategoryBtn = document.getElementById("addCategoryBtn");
 
 // Function to handle adding todos with category selection
-const handleAddTodo = () => {
-  const title = newTodoInput.value.trim();
-  const selectedCategoryID = categorySelect.value || null;  // Get selected category ID or null if not selected
 
-  if (title) {
-    addTodo(title, selectedCategoryID);  // Pass both title and category to addTodo
-    newTodoInput.value = "";  // Clear input after adding todo
-    renderTodos();  // Re-render todos after adding
-  }
-};
+const handleAddTodo = () => {
+    const title = newTodoInput.value.trim();
+    const selectedCategoryID = categorySelect.value; // Get the selected category ID from the dropdown
+  
+    if (title) {
+      addTodo(title, selectedCategoryID);  // Pass both title and selected category ID to addTodo
+      newTodoInput.value = "";  // Clear input after adding todo
+      renderTodos();  // Re-render todos after adding
+    }
+  };
+  
 
 // Event listener for adding a todo
 addTodoBtn.addEventListener("click", handleAddTodo);
@@ -48,6 +50,18 @@ addCategoryBtn.addEventListener("click", () => {
   }
 });
 
+// Event listener for adding a new todo with category selection
+document.getElementById("addTodoBtn").addEventListener("click", () => {
+    const title = document.getElementById("newTodoInput").value.trim();
+    const selectedCategoryID = document.getElementById("categorySelect").value; // Get selected category ID
+    if (title) {
+      addTodo(title, selectedCategoryID); // Pass category ID when adding todo
+      renderTodos();
+    }
+});
+
+
 // Render todos and categories on page load
 renderTodos();
 renderCategories();
+
