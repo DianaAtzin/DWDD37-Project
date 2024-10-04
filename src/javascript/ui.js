@@ -1,5 +1,5 @@
-// ui.js
-import { todos, editTodo, deleteTodo, clearCompletedTodos } from './todos.js';
+import { todos, editTodo, deleteTodo, clearCompletedTodos, currentlyEditing, updateTodo } from './todos.js';
+import { categories } from './categories.js'; // Import categories array
 
 // DOM Elements
 const todoListElement = document.getElementById("todoList");
@@ -7,6 +7,8 @@ const taskCount = document.getElementById("taskCount");
 const updateTodoForm = document.getElementById("updateTodoForm");
 const updateTodoName = document.getElementById("updateTodoName");
 const updateTodoBtn = document.getElementById("updateTodoBtn");
+const categorySelect = document.getElementById("categorySelect");
+const updateTodoCategory = document.getElementById("updateTodoCategory");
 
 // Function to render todos
 export function renderTodos() {
@@ -14,7 +16,8 @@ export function renderTodos() {
 
   todos.forEach((todo, index) => {
     let li = document.createElement("li");
-    li.textContent = todo.todoText;
+    li.textContent = `${todo.todoText} - ${getCategoryNameByID(todo.categoryID)}`; // Show category with todo
+
     li.classList.toggle("done", todo.todoComplete); // Access todoComplete property
 
     // Add click event to toggle done status
@@ -52,9 +55,35 @@ export function renderTodos() {
   taskCount.textContent = `You have ${todos.filter(todo => !todo.todoComplete).length} pending tasks.`;
 }
 
-// UI Functions for editing and deleting
+// Function to render categories in both the add and edit forms
+export function renderCategories() {
+    // Clear existing options
+    categorySelect.innerHTML = '<option value="">Select Category</option>'; 
+    updateTodoCategory.innerHTML = '<option value="">Select Category</option>'; 
+  
+    // Populate categories dynamically
+    categories.forEach(category => {
+      let option = document.createElement("option");
+      option.value = category.categoryID;
+      option.textContent = category.categoryName;
+      categorySelect.appendChild(option);
+  
+      // Create a similar option for the update form
+      let editOption = option.cloneNode(true); // Clone the option
+      updateTodoCategory.appendChild(editOption); // Add to the update dropdown
+    });
+}
+
+// Helper function to get category name by ID
+function getCategoryNameByID(categoryID) {
+  const category = categories.find(cat => cat.categoryID === categoryID);
+  return category ? category.categoryName : 'Uncategorized';
+}
+
+// UI Functions for editing
 function editTodoUI(index) {
   updateTodoName.value = todos[index].todoText;
+  updateTodoCategory.value = todos[index].categoryID || ""; // Set the current category in the dropdown
   editTodo(index);
   updateTodoForm.classList.remove("hidden");
 }
@@ -65,13 +94,18 @@ function deleteTodoUI(index) {
 }
 
 // Event listener for updating a todo
-
 updateTodoBtn.addEventListener("click", () => {
     if (currentlyEditing !== null) {
-      todos[currentlyEditing].todoText = updateTodoName.value.trim();
-      updateTodoName.value = "";
+      // Use the updateTodo function to update both todo text and category
+      updateTodo(updateTodoName.value.trim(), updateTodoCategory.value); // Pass both parameters
+      updateTodoName.value = ""; // Clear the input field
+      updateTodoCategory.value = ""; // Clear the category select
       updateTodoForm.classList.add("hidden");
-      currentlyEditing = null;
       renderTodos();
     }
-  });
+});
+
+// Initial rendering of categories on page load
+renderCategories();
+// Initial rendering of todos on page load
+renderTodos();

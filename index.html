@@ -16,11 +16,27 @@
       <input type="text" id="newTodoInput" placeholder="Enter new task" />
       <button id="addTodoBtn"><i class="fas fa-plus"></i></button>
     </div>
-    
+
+    <div class="categoryField">
+      <select id="categorySelect">
+        <option value="">Select Category</option>
+        <!-- Categories will be populated here -->
+      </select>
+      <input type="text" id="newCategoryInput" placeholder="Add new category" />
+      <button id="addCategoryBtn">Add Category</button>
+    </div>
+
     <ul class="todoList" id="todoList"></ul>
 
     <div id="updateTodoForm" class="hidden">
       <input type="text" id="updateTodoName" placeholder="Edit task" />
+      
+      <!-- Add category select for editing -->
+      <select id="updateTodoCategory">
+        <option value="">Select Category</option>
+        <!-- Categories will be dynamically added here by JavaScript -->
+      </select>
+    
       <button id="updateTodoBtn">Update Todo</button>
     </div>
 
