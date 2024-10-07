@@ -11,40 +11,53 @@
 <body>
   <div class="wrapper">
     <header>Todo List</header>
-    
+
+    <!-- Input field to add new todo -->
     <div class="inputField">
       <input type="text" id="newTodoInput" placeholder="Enter new task" />
       <select id="categorySelect">
         <option value="">Select Category</option>
-        <!-- Categories will be populated here -->
+        <!-- Categories will be populated dynamically here -->
       </select>
       <button id="addTodoBtn"><i class="fas fa-plus"></i></button>
     </div>
 
+    <!-- Category management section -->
     <div class="categoryField">
-      <input type="text" id="newCategoryInput" placeholder="Add new category" />
+      <input type="text" id="newCategoryName" placeholder="Add new category" /> <!-- Updated this ID to match JS -->
       <button id="addCategoryBtn">Add Category</button>
+      <button id="manageCategoriesBtn">Manage Categories</button> <!-- Button to show category management -->
     </div>
 
+    <!-- Category management UI -->
+    <div id="categoryManagement" class="hidden">
+      <h3>Manage Categories</h3>
+      <ul id="categoryList"></ul> <!-- Category list with edit and delete options -->
+    </div>
+
+    <!-- List of todos -->
     <ul class="todoList" id="todoList"></ul>
 
+    <!-- Update todo form -->
     <div id="updateTodoForm" class="hidden">
       <input type="text" id="updateTodoName" placeholder="Edit task" />
       
-      <!-- Add category select for editing -->
+      <!-- Dropdown to select category when editing a todo -->
       <select id="updateTodoCategory">
         <option value="">Select Category</option>
         <!-- Categories will be dynamically added here by JavaScript -->
       </select>
-    
+
       <button id="updateTodoBtn">Update Todo</button>
     </div>
 
+    <!-- Footer section with task count and clear button -->
     <div class="footer">
       <span id="taskCount">You have 0 pending tasks.</span>
       <button id="clearDoneBtn">Clear Done</button>
     </div>
   </div>
+
 
   <script type="module" src="/src/javascript/index.js"></script>
 </body>

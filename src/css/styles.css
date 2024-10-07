@@ -77,19 +77,19 @@ header {
 }
 
 .done {
-  text-decoration: line-through; /* This will add the line through text */
-  color: grey; /* Optional: Change the color of completed items */
+  text-decoration: line-through; 
+  color: grey; 
 }
 
 
 .actions {
   display: flex;
-  gap: 10px; /* Space between buttons */
+  gap: 10px; 
 }
 
 .actions span {
   cursor: pointer;
-  padding: 5px 10px; /* Padding for better visibility */
+  padding: 5px 10px;
   border-radius: 5px;
 }
 
