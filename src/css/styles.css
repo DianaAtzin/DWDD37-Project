@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
-  /* Color Variables */
-  --primary-color: #3498db; /* Light blue */
-  --accent-color: #2ecc71; /* Green */
-  --background-color: #f7f7f7; /* Light grey */
-  --text-color: #333333; /* Dark grey */
-  --success-color: #27ae60; /* Success green */
-  --danger-color: #e74c3c; /* Error red */
+ 
+  --primary-color: #3498db; 
+  --accent-color: #2ecc71; 
+  --background-color: #f7f7f7; 
+  --text-color: #333333; 
+  --success-color: #27ae60; 
+  --danger-color: #e74c3c; 
   --white-color: #fff;
   --grey-color: #ccc;
   --main-shadow: rgba(0, 0, 0, 0.1);
-  --light-title: #777; /* Subtle color for titles */
+  --light-title: #777;
 }
 
 body {
@@ -92,7 +92,7 @@ button:hover {
 }
 
 .todoList li:hover {
-  background-color: rgba(52, 152, 219, 0.2); 
+  background-color: rgba(52, 152, 219, 0.1); 
   color: var(--text-color); 
 }
 
@@ -147,7 +147,6 @@ button:hover {
   cursor: pointer;
 }
 
-
 #categoryList {
   margin-top: 20px;
 }
@@ -155,6 +154,7 @@ button:hover {
 #categoryList li {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 12px;
   background-color: var(--background-color);
   border-radius: 8px;
@@ -167,21 +167,10 @@ button:hover {
   font-weight: 500;
 }
 
-
-#categoryList .editBtn::before,
-#categoryList .deleteBtn::before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
+#categoryList .actions {
+  display: flex;
+  gap: 10px; 
 }
-
-#categoryList .editBtn::before {
-  content: "\f044"; 
-}
-
-#categoryList .deleteBtn::before {
-  content: "\f1f8"; 
-}
-
 
 #categoryList .editBtn,
 #categoryList .deleteBtn {
@@ -191,11 +180,18 @@ button:hover {
   border: none;
   font-size: 18px;
   cursor: pointer;
+  display: flex;
+  align-items: center; /* Aligns the icons vertically */
+}
+
+#categoryList .editBtn i,
+#categoryList .deleteBtn i {
+  margin-right: 0; /* Removes any margin between icons */
 }
 
 #categoryList .editBtn:hover,
 #categoryList .deleteBtn:hover {
-  color: var(--accent-color);
+  color: var(--accent-color); 
 }
 
 .editInput {

@@ -13,7 +13,7 @@ const manageCategoriesBtn = document.getElementById("manageCategoriesBtn");
 const categoryList = document.getElementById("categoryList");
 const categoryManagement = document.getElementById("categoryManagement");
 const addCategoryBtn = document.getElementById("addCategoryBtn");
-const newCategoryName = document.getElementById("newCategoryName");
+const newCategoryName = document.getElementById("newCategoryInput"); // Corrected ID for the new category input
 
 // Function to render todos
 export function renderTodos() {
@@ -35,17 +35,17 @@ export function renderTodos() {
         let actions = document.createElement("div");
         actions.classList.add("actions");
 
-        let editBtn = document.createElement("span");
+        let editBtn = document.createElement("button");
         editBtn.classList.add("editBtn");
-        editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+        editBtn.innerHTML = '<i class="fas fa-edit"></i>'; // Font Awesome icon for edit
         editBtn.addEventListener("click", (event) => {
             event.stopPropagation();
             editTodoUI(index);
         });
 
-        let deleteBtn = document.createElement("span");
+        let deleteBtn = document.createElement("button");
         deleteBtn.classList.add("deleteBtn");
-        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>'; // Font Awesome icon for delete
         deleteBtn.addEventListener("click", (event) => {
             event.stopPropagation();
             deleteTodoUI(index);
@@ -138,10 +138,10 @@ function renderCategoryManagement() {
         editInput.value = category.categoryName;
         editInput.classList.add("editInput", "hidden"); // Hidden by default
 
-        // Edit button
+        // Edit button (icon only)
         let editBtn = document.createElement("button");
-        editBtn.textContent = "Edit";
         editBtn.classList.add("editBtn");
+        editBtn.innerHTML = '<i class="fas fa-edit"></i>'; // Font Awesome edit icon
         editBtn.addEventListener("click", () => {
             // Toggle visibility of input field
             const isHidden = editInput.classList.toggle("hidden");
@@ -159,10 +159,10 @@ function renderCategoryManagement() {
             }
         });
 
-        // Delete button
+        // Delete button (icon only)
         let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete";
         deleteBtn.classList.add("deleteBtn");
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>'; // Font Awesome trash icon
         deleteBtn.addEventListener("click", () => {
             deleteCategory(index); // Delete the category immediately
             renderCategoryManagement(); // Re-render the categories
@@ -182,7 +182,7 @@ function renderCategoryManagement() {
 
 // Event listener for adding a new category
 addCategoryBtn.addEventListener("click", () => {
-    const categoryName = newCategoryName.value.trim();
+    const categoryName = newCategoryName.value.trim(); // Ensure we use the correct input field ID
     if (categoryName) {
         addCategory(categoryName); // Add new category
         newCategoryName.value = ""; // Clear the input field
@@ -195,3 +195,4 @@ addCategoryBtn.addEventListener("click", () => {
 renderCategories();
 // Initial rendering of todos on page load
 renderTodos();
+
