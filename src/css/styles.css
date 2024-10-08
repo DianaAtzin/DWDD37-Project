@@ -1,106 +1,130 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
-  --main-blue: #1572a1;
-  --main-red: #e74c3c;
-  --main-grey: #f2f2f2;
-  --main-white: #fff;
-  --sub-grey: #ccc;
-  background: linear-gradient(106.5deg, rgba(255, 215, 185, 0.91) 23%, rgba(223, 159, 247, 0.8) 93%);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  /* Color Variables */
+  --primary-color: #3498db; /* Light blue */
+  --accent-color: #2ecc71; /* Green */
+  --background-color: #f7f7f7; /* Light grey */
+  --text-color: #333333; /* Dark grey */
+  --success-color: #27ae60; /* Success green */
+  --danger-color: #e74c3c; /* Error red */
+  --white-color: #fff;
+  --grey-color: #ccc;
+  --main-shadow: rgba(0, 0, 0, 0.1);
+  --light-title: #777; /* Subtle color for titles */
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%);
+  color: var(--text-color);
+  font-family: "Poppins", sans-serif;
   height: 100vh;
+  margin: 0;
 }
 
 .wrapper {
-  margin: 120px auto;
-  max-width: 400px;
+  background-color: var(--white-color);
+  margin: 100px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--main-shadow);
+  max-width: 500px;
   width: 100%;
-  background: var(--main-white);
-  padding: 25px;
-  border-radius: 5px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 header {
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 32px;
+  color: var(--primary-color);
+  font-weight: 700;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.inputField {
+.inputField,
+.categoryField {
   display: flex;
-  margin: 20px 0;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-.inputField input {
+.inputField input,
+.inputField select,
+.categoryField input {
+  padding: 12px;
   flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid var(--sub-grey);
   border-radius: 5px;
+  border: 1px solid var(--grey-color);
+  transition: border-color 0.3s;
 }
 
-.inputField button {
-  background-color: var(--main-blue);
-  color: var(--main-white);
+input:focus,
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
+  outline: none;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
   border: none;
-  padding: 0 20px;
-  cursor: pointer;
+  padding: 10px 20px;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.todoList {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
+button:hover {
+  background-color: var(--accent-color);
 }
 
 .todoList li {
+  background-color: var(--white-color);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--main-shadow);
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--main-grey);
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-.done {
-  text-decoration: line-through; 
-  color: grey; 
+.todoList li:hover {
+  background-color: var(--primary-color);
+  color: var(--white-color);
 }
 
+.todoList li.done {
+  text-decoration: line-through;
+  color: var(--grey-color);
+}
 
 .actions {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
-.actions span {
+.actions .editBtn,
+.actions .deleteBtn {
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 5px;
 }
 
 .actions .editBtn {
-  background-color: var(--main-blue);
-  color: var(--main-white);
+  background-color: var(--primary-color);
+  color: var(--white-color);
 }
 
 .actions .deleteBtn {
-  background-color: var(--main-red);
-  color: var(--main-white);
+  background-color: var(--danger-color);
+  color: var(--white-color);
+}
+
+.actions .editBtn:hover,
+.actions .deleteBtn:hover {
+  background-color: var(--accent-color); 
 }
 
 .hidden {
@@ -115,10 +139,53 @@ header {
 }
 
 .footer button {
-  background-color: var(--main-blue);
-  color: var(--main-white);
-  border: none;
+  background-color: var(--success-color);
+  color: var(--white-color);
   padding: 10px 20px;
-  cursor: pointer;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+#categoryList {
+  margin-top: 20px;
+}
+
+#categoryList li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--main-shadow);
+  margin-bottom: 8px;
+}
+
+#categoryManagement h3 {
+  color: var(--light-title);
+  font-weight: 500;
+}
+
+.editInput {
+  padding: 8px;
+  border: 1px solid var(--grey-color);
+  border-radius: 5px;
+}
+
+.editBtn,
+.deleteBtn {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editBtn:hover {
+  background-color: var(--accent-color);
+}
+
+.deleteBtn:hover {
+  background-color: var(--danger-color);
 }
