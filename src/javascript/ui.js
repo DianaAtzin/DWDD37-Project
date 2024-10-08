@@ -150,7 +150,7 @@ function renderCategoryManagement() {
             } else {
                 // If hidden, update the category
                 const newName = editInput.value.trim();
-                if (newName) {
+                if (newName && newName !== category.categoryName) { // Check for actual changes
                     editCategory(index, newName); // Update the category name
                     renderCategoryManagement(); // Re-render the categories
                     renderCategories(); // Update the select options

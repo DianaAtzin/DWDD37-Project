@@ -2,16 +2,16 @@
 
 :root {
   /* Color Variables */
-  --primary-color: #3498db; /* Light blue */
-  --accent-color: #2ecc71; /* Green */
-  --background-color: #f7f7f7; /* Light grey */
-  --text-color: #333333; /* Dark grey */
-  --success-color: #27ae60; /* Success green */
-  --danger-color: #e74c3c; /* Error red */
+  --primary-color: #3498db;
+  --accent-color: #2ecc71;
+  --background-color: #f7f7f7;
+  --text-color: #333;
+  --success-color: #27ae60;
+  --danger-color: #e74c3c;
   --white-color: #fff;
   --grey-color: #ccc;
   --main-shadow: rgba(0, 0, 0, 0.1);
-  --light-title: #777; /* Subtle color for titles */
+  --light-title: #777;
 }
 
 body {
@@ -28,7 +28,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px var(--main-shadow);
-  max-width: 500px;
+  max-width: 600px; /* Increased width for more space */
   width: 100%;
 }
 
@@ -92,8 +92,8 @@ button:hover {
 }
 
 .todoList li:hover {
-  background-color: rgba(52, 152, 219, 0.1); /* Lighter hover */
-  color: var(--text-color); 
+  background-color: rgba(52, 152, 219, 0.1);
+  color: var(--text-color);
 }
 
 .todoList li.done {
@@ -125,7 +125,7 @@ button:hover {
 
 .actions .editBtn:hover,
 .actions .deleteBtn:hover {
-  background-color: var(--accent-color); 
+  background-color: var(--accent-color);
 }
 
 .hidden {
@@ -151,8 +151,8 @@ button:hover {
 #categoryList {
   margin-top: 20px;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  gap: 10px; /* Adjusted space between items */
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 #categoryList li {
@@ -164,6 +164,18 @@ button:hover {
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--main-shadow);
   margin-bottom: 8px;
+  position: relative;
+}
+
+/* Hide the buttons initially */
+#categoryList .actions {
+  display: none;
+  gap: 10px;
+}
+
+/* Display actions on hover */
+#categoryList li:hover .actions {
+  display: flex;
 }
 
 #categoryManagement h3 {
@@ -171,28 +183,23 @@ button:hover {
   font-weight: 500;
 }
 
-#categoryList .actions {
-  display: flex;
-  gap: 10px; /* Adjusted gap to match the todo list */
-}
-
 #categoryList .editBtn,
 #categoryList .deleteBtn {
-  background-color: var(--primary-color); /* Button background */
+  background-color: var(--primary-color);
   color: var(--white-color);
-  padding: 5px 10px; /* Same padding as in todo list */
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 12px; /* Same font size as the todo list buttons */
+  font-size: 12px;
 }
 
 #categoryList .deleteBtn {
-  background-color: var(--danger-color); /* Make delete button red */
+  background-color: var(--danger-color);
 }
 
 #categoryList .editBtn:hover,
 #categoryList .deleteBtn:hover {
-  background-color: var(--accent-color); /* Change color on hover */
+  background-color: var(--accent-color);
 }
 
 .editInput {
@@ -203,6 +210,6 @@ button:hover {
 
 #categoryList .editBtn i,
 #categoryList .deleteBtn i {
-  font-size: 12px; /* Reduce icon size to match the todo list buttons */
+  font-size: 12px;
   margin: 0;
 }
