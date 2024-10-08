@@ -28,7 +28,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px var(--main-shadow);
-  max-width: 600px; /* Increased width for more space */
+  max-width: 600px;
   width: 100%;
 }
 
@@ -147,6 +147,56 @@ button:hover {
   cursor: pointer;
 }
 
+/* Update Todo Form */
+#updateTodoForm {
+  display: none; /* Hidden initially */
+  padding: 20px;
+  background-color: var(--white-color); /* Clean white background to match the rest of the app */
+  border-radius: 10px; /* Slightly larger border-radius for a softer look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow for emphasis */
+  margin-top: 20px;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease; /* Smooth transition effect */
+}
+
+#updateTodoForm input,
+#updateTodoForm select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--grey-color);
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#updateTodoForm input:focus,
+#updateTodoForm select:focus {
+  border-color: var(--primary-color); /* Blue border on focus */
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.3); /* Subtle focus shadow */
+  outline: none;
+}
+
+#updateTodoForm button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#updateTodoForm button:hover {
+  background-color: var(--accent-color); /* Green on hover */
+  transform: translateY(-2px); /* Subtle hover lift effect */
+}
+
+#updateTodoForm button:active {
+  transform: translateY(0); /* Reset on click */
+}
+
 /* Category Management */
 #categoryList {
   margin-top: 20px;
@@ -160,20 +210,26 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background-color: var(--background-color);
+  background-color: var(--white-color); /* Changed to white to match todo items */
   border-radius: 8px;
-  box-shadow: 0 2px 4px var(--main-shadow);
-  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Consistent shadow with #updateTodoForm */
+  margin-bottom: 10px;
   position: relative;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-/* Hide the buttons initially */
+#categoryList li:hover {
+  background-color: rgba(52, 152, 219, 0.1); /* Light hover effect */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Slight lift on hover */
+}
+
+/* Edit and Delete buttons, hidden until hover */
 #categoryList .actions {
   display: none;
-  gap: 10px;
+  gap: 5px; /* Closer buttons */
+  margin-right: 5px; /* Padding to the right */
 }
 
-/* Display actions on hover */
 #categoryList li:hover .actions {
   display: flex;
 }
@@ -187,10 +243,11 @@ button:hover {
 #categoryList .deleteBtn {
   background-color: var(--primary-color);
   color: var(--white-color);
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 5px 8px; /* Make padding smaller to bring buttons closer */
+  border-radius: 6px;
+  font-size: 14px;
   cursor: pointer;
-  font-size: 12px;
+  transition: background-color 0.3s, transform 0.2s ease;
 }
 
 #categoryList .deleteBtn {
@@ -200,16 +257,47 @@ button:hover {
 #categoryList .editBtn:hover,
 #categoryList .deleteBtn:hover {
   background-color: var(--accent-color);
+  transform: translateY(-2px); /* Lift on hover */
 }
 
-.editInput {
-  padding: 8px;
-  border: 1px solid var(--grey-color);
-  border-radius: 5px;
+#categoryList .editBtn:active,
+#categoryList .deleteBtn:active {
+  transform: translateY(0); /* Reset on click */
 }
 
 #categoryList .editBtn i,
 #categoryList .deleteBtn i {
-  font-size: 12px;
+  font-size: 12px; /* Smaller icon size */
   margin: 0;
+}
+
+/* Category Edit Input */
+#categoryList .editInput {
+  display: none; /* Hidden until editing */
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--grey-color);
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#categoryList .editInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
+  outline: none;
+}
+
+
+#categoryList li.editing .editInput {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#categoryList li.editing .category-name {
+  display: none; 
+}
+
+#categoryList li.editing .actions {
+  display: none; 
 }

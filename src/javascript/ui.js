@@ -90,7 +90,7 @@ function editTodoUI(index) {
     updateTodoName.value = todos[index].todoText;
     updateTodoCategory.value = todos[index].categoryID || ""; // Set the current category in the dropdown
     editTodo(index);
-    updateTodoForm.classList.remove("hidden");
+    updateTodoForm.style.display = "flex"; // Ensure form is displayed with flex layout
 }
 
 function deleteTodoUI(index) {
@@ -102,16 +102,14 @@ function deleteTodoUI(index) {
 updateTodoBtn.addEventListener("click", () => {
     if (currentlyEditing !== null) {
         const newTitle = updateTodoName.value.trim();
-        const selectedCategoryID = updateTodoCategory.value; // Get the selected category ID
-        // Use the updateTodo function to update both todo text and category
-        updateTodo(newTitle, selectedCategoryID); // Pass both parameters
-        updateTodoName.value = ""; // Clear the input field
-        updateTodoCategory.value = ""; // Clear the category select
-        updateTodoForm.classList.add("hidden");
+        const selectedCategoryID = updateTodoCategory.value;
+        updateTodo(newTitle, selectedCategoryID);
+        updateTodoName.value = "";
+        updateTodoCategory.value = "";
+        updateTodoForm.style.display = "none"; // Hide the form again
         renderTodos(); // Re-render todos to reflect changes
     }
 });
-
 // --- Category Management Section ---
 
 // Show/Hide category management
@@ -142,18 +140,20 @@ function renderCategoryManagement() {
         let editBtn = document.createElement("button");
         editBtn.classList.add("editBtn");
         editBtn.innerHTML = '<i class="fas fa-edit"></i>'; // Font Awesome edit icon
+
+        // Add event listener to toggle editing mode
         editBtn.addEventListener("click", () => {
-            // Toggle visibility of input field
-            const isHidden = editInput.classList.toggle("hidden");
-            if (!isHidden) {
-                editInput.focus(); // Focus on input when it becomes visible
+            li.classList.toggle('editing'); // Toggle 'editing' class on li
+            if (li.classList.contains('editing')) {
+                editInput.classList.remove("hidden"); // Show input field
+                editInput.focus(); // Set focus on the input
             } else {
-                // If hidden, update the category
+                editInput.classList.add("hidden"); // Hide input field after editing
                 const newName = editInput.value.trim();
-                if (newName && newName !== category.categoryName) { // Check for actual changes
+                if (newName) {
                     editCategory(index, newName); // Update the category name
-                    renderCategoryManagement(); // Re-render the categories
-                    renderCategories(); // Update the select options
+                    renderCategoryManagement(); // Re-render categories
+                    renderCategories(); // Re-render the dropdowns
                     renderTodos(); // Re-render the todos with updated category names
                 }
             }
@@ -163,11 +163,12 @@ function renderCategoryManagement() {
         let deleteBtn = document.createElement("button");
         deleteBtn.classList.add("deleteBtn");
         deleteBtn.innerHTML = '<i class="fas fa-trash"></i>'; // Font Awesome trash icon
+
         deleteBtn.addEventListener("click", () => {
             deleteCategory(index); // Delete the category immediately
-            renderCategoryManagement(); // Re-render the categories
-            renderCategories(); // Update the select options
-            renderTodos(); // Re-render the todos to reflect the deleted category
+            renderCategoryManagement(); // Re-render categories
+            renderCategories(); // Update the dropdown options
+            renderTodos(); // Re-render todos
         });
 
         // Append input, buttons, and name to the list item
@@ -179,6 +180,7 @@ function renderCategoryManagement() {
         categoryList.appendChild(li);
     });
 }
+
 
 // Event listener for adding a new category
 addCategoryBtn.addEventListener("click", () => {
