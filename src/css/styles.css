@@ -15,7 +15,7 @@
 }
 
 body {
-  background: radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%);
+  background: linear-gradient(109.6deg, rgb(223, 234, 247) 11.2%, rgb(244, 248, 252) 91.1%);
   color: var(--text-color);
   font-family: "Poppins", sans-serif;
   height: 100vh;
@@ -78,6 +78,7 @@ button:hover {
   background-color: var(--accent-color);
 }
 
+/* Todo list */
 .todoList li {
   background-color: var(--white-color);
   padding: 15px;
@@ -91,8 +92,8 @@ button:hover {
 }
 
 .todoList li:hover {
-  background-color: var(--primary-color);
-  color: var(--white-color);
+  background-color: rgba(52, 152, 219, 0.2); 
+  color: var(--text-color); 
 }
 
 .todoList li.done {
@@ -146,6 +147,7 @@ button:hover {
   cursor: pointer;
 }
 
+
 #categoryList {
   margin-top: 20px;
 }
@@ -165,27 +167,39 @@ button:hover {
   font-weight: 500;
 }
 
+
+#categoryList .editBtn::before,
+#categoryList .deleteBtn::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+
+#categoryList .editBtn::before {
+  content: "\f044"; 
+}
+
+#categoryList .deleteBtn::before {
+  content: "\f1f8"; 
+}
+
+
+#categoryList .editBtn,
+#categoryList .deleteBtn {
+  background-color: transparent;
+  color: var(--primary-color);
+  padding: 5px;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#categoryList .editBtn:hover,
+#categoryList .deleteBtn:hover {
+  color: var(--accent-color);
+}
+
 .editInput {
   padding: 8px;
   border: 1px solid var(--grey-color);
   border-radius: 5px;
-}
-
-.editBtn,
-.deleteBtn {
-  background-color: var(--primary-color);
-  color: var(--white-color);
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.editBtn:hover {
-  background-color: var(--accent-color);
-}
-
-.deleteBtn:hover {
-  background-color: var(--danger-color);
 }
