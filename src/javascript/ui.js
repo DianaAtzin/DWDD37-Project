@@ -13,7 +13,7 @@ const manageCategoriesBtn = document.getElementById("manageCategoriesBtn");
 const categoryList = document.getElementById("categoryList");
 const categoryManagement = document.getElementById("categoryManagement");
 const addCategoryBtn = document.getElementById("addCategoryBtn");
-const newCategoryName = document.getElementById("newCategoryInput"); // Corrected ID for the new category input
+const newCategoryName = document.getElementById("newCategoryName");
 
 // Function to render todos
 export function renderTodos() {
@@ -195,4 +195,3 @@ addCategoryBtn.addEventListener("click", () => {
 renderCategories();
 // Initial rendering of todos on page load
 renderTodos();
-

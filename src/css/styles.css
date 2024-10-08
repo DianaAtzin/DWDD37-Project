@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
- 
-  --primary-color: #3498db; 
-  --accent-color: #2ecc71; 
-  --background-color: #f7f7f7; 
-  --text-color: #333333; 
-  --success-color: #27ae60; 
-  --danger-color: #e74c3c; 
+  /* Color Variables */
+  --primary-color: #3498db; /* Light blue */
+  --accent-color: #2ecc71; /* Green */
+  --background-color: #f7f7f7; /* Light grey */
+  --text-color: #333333; /* Dark grey */
+  --success-color: #27ae60; /* Success green */
+  --danger-color: #e74c3c; /* Error red */
   --white-color: #fff;
   --grey-color: #ccc;
   --main-shadow: rgba(0, 0, 0, 0.1);
-  --light-title: #777;
+  --light-title: #777; /* Subtle color for titles */
 }
 
 body {
@@ -92,7 +92,7 @@ button:hover {
 }
 
 .todoList li:hover {
-  background-color: rgba(52, 152, 219, 0.1); 
+  background-color: rgba(52, 152, 219, 0.1); /* Lighter hover */
   color: var(--text-color); 
 }
 
@@ -147,8 +147,12 @@ button:hover {
   cursor: pointer;
 }
 
+/* Category Management */
 #categoryList {
   margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 10px; /* Adjusted space between items */
 }
 
 #categoryList li {
@@ -169,33 +173,36 @@ button:hover {
 
 #categoryList .actions {
   display: flex;
-  gap: 10px; 
+  gap: 10px; /* Adjusted gap to match the todo list */
 }
 
 #categoryList .editBtn,
 #categoryList .deleteBtn {
-  background-color: transparent;
-  color: var(--primary-color);
-  padding: 5px;
-  border: none;
-  font-size: 18px;
+  background-color: var(--primary-color); /* Button background */
+  color: var(--white-color);
+  padding: 5px 10px; /* Same padding as in todo list */
+  border-radius: 5px;
   cursor: pointer;
-  display: flex;
-  align-items: center; /* Aligns the icons vertically */
+  font-size: 12px; /* Same font size as the todo list buttons */
 }
 
-#categoryList .editBtn i,
-#categoryList .deleteBtn i {
-  margin-right: 0; /* Removes any margin between icons */
+#categoryList .deleteBtn {
+  background-color: var(--danger-color); /* Make delete button red */
 }
 
 #categoryList .editBtn:hover,
 #categoryList .deleteBtn:hover {
-  color: var(--accent-color); 
+  background-color: var(--accent-color); /* Change color on hover */
 }
 
 .editInput {
   padding: 8px;
   border: 1px solid var(--grey-color);
   border-radius: 5px;
+}
+
+#categoryList .editBtn i,
+#categoryList .deleteBtn i {
+  font-size: 12px; /* Reduce icon size to match the todo list buttons */
+  margin: 0;
 }
