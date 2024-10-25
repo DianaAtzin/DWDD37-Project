@@ -55,7 +55,7 @@ app.get('/api/todos', (req, res) => {
 });
 
 // POST TODO
-app.post('/api/todos', (req, res) => {
+app.post('/api/todo', (req, res) => {
     const newTodo = {
         todoID: todos.length,  // Use length for unique ID
         todoText: req.body.todoText,
@@ -67,7 +67,7 @@ app.post('/api/todos', (req, res) => {
 });
 
 // PUT TODO (update)
-app.put('/api/todos/:todoID', (req, res) => {
+app.put('/api/todo', (req, res) => {
     const todo = todos.find(t => t.todoID === parseInt(req.params.todoID));
     if (!todo) return res.status(404).send('Todo not found');
 
@@ -80,13 +80,13 @@ app.put('/api/todos/:todoID', (req, res) => {
 });
 
 // DELETE TODO
-app.delete('/api/todos/:todoID', (req, res) => {
+app.delete('/api/todo', (req, res) => {
     todos = todos.filter(t => t.todoID !== parseInt(req.params.todoID));
     res.status(204).send(); // No content to send back
 });
 
 // GET ALL TODOS for a CATEGORY
-app.get('/api/categories/:categoryID/todos', (req, res) => {
+app.get('/api/categories/categoryID/todos', (req, res) => {
     const categoryTodos = todos.filter(t => t.categoryID === parseInt(req.params.categoryID));
     res.json(categoryTodos);
 });
@@ -107,7 +107,7 @@ app.post('/api/categories', (req, res) => {
 });
 
 // PUT CATEGORIES (update)
-app.put('/api/categories/:categoryID', (req, res) => {
+app.put('/api/categories/categoryID', (req, res) => {
     const category = categories.find(c => c.categoryID === parseInt(req.params.categoryID));
     if (!category) return res.status(404).send('Category not found');
 
@@ -116,7 +116,7 @@ app.put('/api/categories/:categoryID', (req, res) => {
 });
 
 // DELETE CATEGORIES
-app.delete('/api/categories/:categoryID', (req, res) => {
+app.delete('/api/categories/categoryID', (req, res) => {
     categories = categories.filter(c => c.categoryID !== parseInt(req.params.categoryID));
     res.status(204).send(); // No content to send back
 });
