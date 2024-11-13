@@ -33,6 +33,15 @@ let categories = [
     { categoryID: 2, categoryName: 'Laundry' },
 ];
 
+// Helper functions to generate new IDs
+function getNextTodoID() {
+    return todos.length > 0 ? Math.max(...todos.map(todo => todo.todoID)) + 1 : 0;
+}
+
+function getNextCategoryID() {
+    return categories.length > 0 ? Math.max(...categories.map(cat => cat.categoryID)) + 1 : 0;
+}
+
 // API Endpoints
 
 // GET TODOS
@@ -40,21 +49,18 @@ app.get('/api/todos', (req, res) => {
     res.json(todos);
 });
 
-
-// POST TODO
-app.post('/api/todo', (req, res) => {
+// POST TODOS
+app.post('/api/todos', (req, res) => {
     const { todoText, categoryID } = req.body;
     const newTodo = {
-        todoID: todos.length,
+        todoID: getNextTodoID(),
         todoText,
         todoComplete: false,
-        categoryID: categoryID || 1,  // Default to category '1' if not provided
+        categoryID: parseInt(categoryID),  // Ensure categoryID is stored as a number
     };
     todos.push(newTodo);
     res.status(201).json(newTodo);
 });
-
-
 
 // PUT TODO (update)
 app.put('/api/todo/:todoID', (req, res) => {
@@ -85,40 +91,42 @@ app.get('/api/categories', (req, res) => {
     res.json(categories);
 });
 
-// POST CATEGORIES
+// POST CATEGORY
 app.post('/api/categories', (req, res) => {
-    const newCategoryID = Math.max(...categories.map(cat => cat.categoryID)) + 1; // Get next available categoryID
+    const categoryName = req.body.categoryName;
+    if (!categoryName) return res.status(400).send('Category name is required');
+
     const newCategory = {
-        categoryID: newCategoryID,
-        categoryName: req.body.categoryName,
+        categoryID: getNextCategoryID(),
+        categoryName,
     };
     categories.push(newCategory);
     res.status(201).json(newCategory);
 });
 
-// PUT CATEGORIES (update)
+// PUT CATEGORY (update)
 app.put('/api/categories/:categoryID', (req, res) => {
     const category = categories.find(c => c.categoryID === parseInt(req.params.categoryID));
     if (!category) return res.status(404).send('Category not found');
 
     category.categoryName = req.body.categoryName || category.categoryName;
 
-    // Ensure todos that had this category are updated to reflect the new name
-    todos.forEach(todo => {
-        if (todo.categoryID === category.categoryID) {
-            todo.categoryName = category.categoryName;
-        }
-    });
-
     res.json(category);
 });
 
-// DELETE CATEGORIES
+// DELETE CATEGORY
 app.delete('/api/categories/:categoryID', (req, res) => {
-    categories = categories.filter(c => c.categoryID !== parseInt(req.params.categoryID));
+    const categoryId = parseInt(req.params.categoryID);
+    categories = categories.filter(c => c.categoryID !== categoryId);
     
     // Remove all todos related to the deleted category
-    todos = todos.filter(todo => todo.categoryID !== parseInt(req.params.categoryID));
+    todos = todos.filter(todo => todo.categoryID !== categoryId);
     
+    res.status(204).send(); // No content to send back
+});
+
+// Clear all completed todos
+app.delete('/api/todos/clear-done', (req, res) => {
+    todos = todos.filter(todo => !todo.todoComplete);
     res.status(204).send(); // No content to send back
 });

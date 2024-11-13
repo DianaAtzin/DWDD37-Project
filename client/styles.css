@@ -96,10 +96,13 @@ button:hover {
   color: var(--text-color);
 }
 
+/* Style for completed todos */
 .todoList li.done {
   text-decoration: line-through;
   color: var(--grey-color);
+  background-color: rgba(200, 200, 200, 0.1); 
 }
+
 
 .actions {
   display: flex;
@@ -151,14 +154,14 @@ button:hover {
 #updateTodoForm {
   display: none; /* Hidden initially */
   padding: 20px;
-  background-color: var(--white-color); /* Clean white background to match the rest of the app */
-  border-radius: 10px; /* Slightly larger border-radius for a softer look */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow for emphasis */
+  background-color: var(--white-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   gap: 15px;
   flex-direction: column;
   align-items: center;
-  transition: all 0.3s ease; /* Smooth transition effect */
+  transition: all 0.3s ease;
 }
 
 #updateTodoForm input,
@@ -173,8 +176,8 @@ button:hover {
 
 #updateTodoForm input:focus,
 #updateTodoForm select:focus {
-  border-color: var(--primary-color); /* Blue border on focus */
-  box-shadow: 0 0 6px rgba(52, 152, 219, 0.3); /* Subtle focus shadow */
+  border-color: var(--primary-color);
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
   outline: none;
 }
 
@@ -189,12 +192,12 @@ button:hover {
 }
 
 #updateTodoForm button:hover {
-  background-color: var(--accent-color); /* Green on hover */
-  transform: translateY(-2px); /* Subtle hover lift effect */
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
 }
 
 #updateTodoForm button:active {
-  transform: translateY(0); /* Reset on click */
+  transform: translateY(0);
 }
 
 /* Category Management */
@@ -210,28 +213,17 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background-color: var(--white-color); /* Changed to white to match todo items */
+  background-color: var(--white-color);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Consistent shadow with #updateTodoForm */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   position: relative;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 #categoryList li:hover {
-  background-color: rgba(52, 152, 219, 0.1); /* Light hover effect */
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Slight lift on hover */
-}
-
-/* Edit and Delete buttons, hidden until hover */
-#categoryList .actions {
-  display: none;
-  gap: 5px; /* Closer buttons */
-  margin-right: 5px; /* Padding to the right */
-}
-
-#categoryList li:hover .actions {
-  display: flex;
+  background-color: rgba(52, 152, 219, 0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 #categoryManagement h3 {
@@ -239,11 +231,18 @@ button:hover {
   font-weight: 500;
 }
 
+/* Always Visible Edit and Delete Buttons */
+#categoryList .actions {
+  display: flex; 
+  gap: 5px;
+  margin-right: 5px;
+}
+
 #categoryList .editBtn,
 #categoryList .deleteBtn {
   background-color: var(--primary-color);
   color: var(--white-color);
-  padding: 5px 8px; /* Make padding smaller to bring buttons closer */
+  padding: 5px 8px;
   border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
@@ -257,23 +256,22 @@ button:hover {
 #categoryList .editBtn:hover,
 #categoryList .deleteBtn:hover {
   background-color: var(--accent-color);
-  transform: translateY(-2px); /* Lift on hover */
+  transform: translateY(-2px);
 }
 
 #categoryList .editBtn:active,
 #categoryList .deleteBtn:active {
-  transform: translateY(0); /* Reset on click */
+  transform: translateY(0);
 }
 
 #categoryList .editBtn i,
 #categoryList .deleteBtn i {
-  font-size: 12px; /* Smaller icon size */
+  font-size: 12px;
   margin: 0;
 }
 
 /* Category Edit Input */
 #categoryList .editInput {
-  display: none; /* Hidden until editing */
   width: 100%;
   padding: 12px;
   border: 1px solid var(--grey-color);
@@ -287,7 +285,6 @@ button:hover {
   box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
   outline: none;
 }
-
 
 #categoryList li.editing .editInput {
   display: block;
