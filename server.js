@@ -22,25 +22,11 @@ app.get('/', (req, res) => {
 
 // In-memory data structures
 let todos = [
-    {
-        todoID: 0,
-        todoText: "Buy groceries",
-        todoComplete: false,
-        categoryID: 1,
-    },
-    {
-        todoID: 1,
-        todoText: "Wash the dishes",
-        todoComplete: true,
-        categoryID: 2,
-    },
-    {
-        todoID: 2,
-        todoText: "Finish laundry",
-        todoComplete: false,
-        categoryID: 2,
-    },
+    { todoID: 0, todoText: "Buy groceries", todoComplete: false, categoryID: 1 },
+    { todoID: 1, todoText: "Wash the dishes", todoComplete: true, categoryID: 2 },
+    { todoID: 2, todoText: "Finish laundry", todoComplete: false, categoryID: 2 },
 ];
+
 let categories = [
     { categoryID: 0, categoryName: 'Household' },
     { categoryID: 1, categoryName: 'Groceries' },
@@ -54,25 +40,28 @@ app.get('/api/todos', (req, res) => {
     res.json(todos);
 });
 
+
 // POST TODO
 app.post('/api/todo', (req, res) => {
+    const { todoText, categoryID } = req.body;
     const newTodo = {
-        todoID: todos.length,  // Use length for unique ID
-        todoText: req.body.todoText,
-        todoComplete: req.body.todoComplete || false, // Default to false if not provided
-        categoryID: req.body.categoryID,
+        todoID: todos.length,
+        todoText,
+        todoComplete: false,
+        categoryID: categoryID || 1,  // Default to category '1' if not provided
     };
     todos.push(newTodo);
     res.status(201).json(newTodo);
 });
 
+
+
 // PUT TODO (update)
-app.put('/api/todo', (req, res) => {
+app.put('/api/todo/:todoID', (req, res) => {
     const todo = todos.find(t => t.todoID === parseInt(req.params.todoID));
     if (!todo) return res.status(404).send('Todo not found');
 
-    // Update todo properties
-    todo.todoText = req.body.todoText !== undefined ? req.body.todoText : todo.todoText;
+    todo.todoText = req.body.todoText || todo.todoText;
     todo.todoComplete = req.body.todoComplete !== undefined ? req.body.todoComplete : todo.todoComplete;
     todo.categoryID = req.body.categoryID !== undefined ? req.body.categoryID : todo.categoryID;
 
@@ -80,13 +69,13 @@ app.put('/api/todo', (req, res) => {
 });
 
 // DELETE TODO
-app.delete('/api/todo', (req, res) => {
+app.delete('/api/todo/:todoID', (req, res) => {
     todos = todos.filter(t => t.todoID !== parseInt(req.params.todoID));
     res.status(204).send(); // No content to send back
 });
 
 // GET ALL TODOS for a CATEGORY
-app.get('/api/categories/categoryID/todos', (req, res) => {
+app.get('/api/categories/:categoryID/todos', (req, res) => {
     const categoryTodos = todos.filter(t => t.categoryID === parseInt(req.params.categoryID));
     res.json(categoryTodos);
 });
@@ -98,8 +87,9 @@ app.get('/api/categories', (req, res) => {
 
 // POST CATEGORIES
 app.post('/api/categories', (req, res) => {
+    const newCategoryID = Math.max(...categories.map(cat => cat.categoryID)) + 1; // Get next available categoryID
     const newCategory = {
-        categoryID: categories.length,
+        categoryID: newCategoryID,
         categoryName: req.body.categoryName,
     };
     categories.push(newCategory);
@@ -107,16 +97,28 @@ app.post('/api/categories', (req, res) => {
 });
 
 // PUT CATEGORIES (update)
-app.put('/api/categories/categoryID', (req, res) => {
+app.put('/api/categories/:categoryID', (req, res) => {
     const category = categories.find(c => c.categoryID === parseInt(req.params.categoryID));
     if (!category) return res.status(404).send('Category not found');
 
-    category.categoryName = req.body.categoryName || category.categoryName; // Update category name
+    category.categoryName = req.body.categoryName || category.categoryName;
+
+    // Ensure todos that had this category are updated to reflect the new name
+    todos.forEach(todo => {
+        if (todo.categoryID === category.categoryID) {
+            todo.categoryName = category.categoryName;
+        }
+    });
+
     res.json(category);
 });
 
 // DELETE CATEGORIES
-app.delete('/api/categories/categoryID', (req, res) => {
+app.delete('/api/categories/:categoryID', (req, res) => {
     categories = categories.filter(c => c.categoryID !== parseInt(req.params.categoryID));
+    
+    // Remove all todos related to the deleted category
+    todos = todos.filter(todo => todo.categoryID !== parseInt(req.params.categoryID));
+    
     res.status(204).send(); // No content to send back
 });
