@@ -1,4 +1,3 @@
-
 // DOM Elements
 const newTodoInput = document.getElementById('newTodoInput');
 const addTodoBtn = document.getElementById('addTodoBtn');
@@ -114,6 +113,8 @@ async function startEditingTodo(todo, categories) {
     const todoItem = document.querySelector(`#todoList li[data-id="${todo.todoID}"]`);
 
     if (todoItem) {
+        todoItem.classList.add('editing'); // Mark the todo as being edited
+
         todoItem.innerHTML = '';
 
         const editInput = document.createElement('input');
@@ -139,8 +140,9 @@ async function startEditingTodo(todo, categories) {
         saveButton.textContent = 'Save';
         saveButton.classList.add('saveBtn');
         saveButton.addEventListener('click', async (event) => {
-            event.stopPropagation(); // Stop marking as done on save click
+            event.stopPropagation(); // Prevent marking as done on save click
             await saveTodoChanges(todo.todoID, editInput.value, categorySelect.value);
+            todoItem.classList.remove('editing'); // Remove editing mode after save
         });
         todoItem.appendChild(saveButton);
     }
@@ -190,7 +192,8 @@ function renderTodos(todos, categories) {
         todoItem.textContent = `${todo.todoText} (${categoryName})`;
 
         todoItem.addEventListener('click', (event) => {
-            if (!event.target.closest('.editBtn, .deleteBtn')) {
+            // Ensure marking as done doesn't happen when editing
+            if (!event.target.closest('.editBtn, .deleteBtn') && !todoItem.classList.contains('editing')) {
                 toggleTodoComplete(todo.todoID);
             }
         });
@@ -218,15 +221,19 @@ function renderTodos(todos, categories) {
     taskCount.textContent = `You have ${todos.filter(todo => !todo.todoComplete).length} pending tasks.`;
 }
 
-function startEditingCategory(category) {
+// Category Editing Function
+async function startEditingCategory(category) {
     const categoryItem = document.querySelector(`#categoryList li[data-id="${category.categoryID}"]`);
     
     if (categoryItem) {
         const currentName = categoryItem.querySelector('.category-name');
         const actionsContainer = categoryItem.querySelector('.actions');
+        
+        // Hide the current name and actions while editing
         currentName.style.display = 'none';
         actionsContainer.style.display = 'none';
 
+        // Create input field to edit the category name
         const editInput = document.createElement('input');
         editInput.type = 'text';
         editInput.value = category.categoryName || '';
@@ -239,10 +246,12 @@ function startEditingCategory(category) {
             const newCategoryName = editInput.value.trim();
             
             if (newCategoryName && newCategoryName !== category.categoryName) {
+                // Save the new category name
                 await updateCategory(category.categoryID, newCategoryName);
                 currentName.textContent = newCategoryName;
             }
 
+            // Remove the input field and restore the original layout
             editInput.remove();
             currentName.style.display = 'inline';
             actionsContainer.style.display = 'flex';
@@ -276,7 +285,7 @@ function renderCategories(categories) {
         editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
         editButton.classList.add('editBtn');
         editButton.addEventListener('click', () => {
-            startEditingCategory(category);
+            startEditingCategory(category); // Now works because startEditingCategory is defined
         });
 
         const deleteButton = document.createElement('button');

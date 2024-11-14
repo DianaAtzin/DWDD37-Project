@@ -78,7 +78,15 @@ button:hover {
   background-color: var(--accent-color);
 }
 
-/* Todo list */
+/* Todo List container */
+.todoList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+}
+
+/* Todo List items */
 .todoList li {
   background-color: var(--white-color);
   padding: 15px;
@@ -86,11 +94,21 @@ button:hover {
   box-shadow: 0 2px 4px var(--main-shadow);
   margin-bottom: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Align todo text and buttons */
   align-items: center;
   transition: background-color 0.3s;
 }
 
+/* Align buttons inside the todo list item */
+.todoList li .actions {
+  display: flex;
+  gap: 10px; /* Consistent gap between buttons */
+  align-items: center; /* Vertically align buttons */
+}
+
+
+
+/* Hover effect for todos */
 .todoList li:hover {
   background-color: rgba(52, 152, 219, 0.1);
   color: var(--text-color);
@@ -100,54 +118,60 @@ button:hover {
 .todoList li.done {
   text-decoration: line-through;
   color: var(--grey-color);
-  background-color: rgba(200, 200, 200, 0.1); 
+  background-color: rgba(200, 200, 200, 0.1);
 }
 
-
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.actions .editBtn,
-.actions .deleteBtn {
+/* Edit and Delete button styles */
+button.editBtn,
+button.deleteBtn {
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
-.actions .editBtn {
+/* Buttons for Edit and Delete (Todos and Categories) */
+button.editBtn {
   background-color: var(--primary-color);
   color: var(--white-color);
 }
 
-.actions .deleteBtn {
+button.deleteBtn {
   background-color: var(--danger-color);
   color: var(--white-color);
 }
 
-.actions .editBtn:hover,
-.actions .deleteBtn:hover {
+/* Hover and active states */
+button.editBtn:hover,
+button.deleteBtn:hover {
   background-color: var(--accent-color);
 }
 
-.hidden {
-  display: none;
+button.editBtn:active,
+button.deleteBtn:active {
+  transform: translateY(1px);  /* Slight push-down effect */
 }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.footer button {
+/* Styling for the Clear Done button */
+#clearDoneBtn {
   background-color: var(--success-color);
   color: var(--white-color);
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  align-self: center; /* Center the button horizontally */
+
+}
+
+#clearDoneBtn:hover {
+  background-color: var(--accent-color);
+}
+
+#clearDoneBtn:active {
+  transform: translateY(1px);
 }
 
 /* Update Todo Form */
@@ -164,6 +188,7 @@ button:hover {
   transition: all 0.3s ease;
 }
 
+/* Remove any border or line when editing */
 #updateTodoForm input,
 #updateTodoForm select {
   width: 100%;
@@ -200,6 +225,7 @@ button:hover {
   transform: translateY(0);
 }
 
+
 /* Category Management */
 #categoryList {
   margin-top: 20px;
@@ -231,11 +257,9 @@ button:hover {
   font-weight: 500;
 }
 
-/* Always Visible Edit and Delete Buttons */
 #categoryList .actions {
-  display: flex; 
+  display: flex;
   gap: 5px;
-  margin-right: 5px;
 }
 
 #categoryList .editBtn,
@@ -292,9 +316,43 @@ button:hover {
 }
 
 #categoryList li.editing .category-name {
-  display: none; 
+  display: none;
 }
 
 #categoryList li.editing .actions {
-  display: none; 
+  display: none;
 }
+
+
+/* Ensure correct footer alignment */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.footer button {
+  background-color: var(--success-color);
+  color: var(--white-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.footer button:hover {
+  background-color: var(--accent-color);
+}
+
+.footer button:active {
+  transform: translateY(1px);
+}
+
+/* Update for Clear Done button to be more centered */
+#clearDoneBtn {
+  margin-top: 20px;
+  align-self: center; /* Center it horizontally */
+  width: auto; /* Ensures it takes only the space it needs */
+}
+
